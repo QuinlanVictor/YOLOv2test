@@ -12,12 +12,12 @@ trainingData = GDSDataset;
 
 imageSize = [512 512 3];
 numClasses =  width(GDSDataset)-1;
-anchorBoxes = [33,31;35,41;24,23];%ÕâÓ¦¸ÃÓÃ¾ÛÀàÔ¤²â
+anchorBoxes = [33,31;35,41;24,23];%è¿™åº”è¯¥ç”¨èšç±»é¢„æµ‹
 baseNetwork = resnet50;
 featureLayer = 'activation_40_relu';
 lgraph = yolov2Layers(imageSize,numClasses,anchorBoxes,baseNetwork,featureLayer);
 %%
-doTraining = true;%×Ô¼ºĞŞ¸ÄÄ£ĞÍ
+doTraining = true;%è‡ªå·±ä¿®æ”¹æ¨¡å‹
 
 model_name = 'detector_yolov2_test';
 if doTraining
@@ -32,7 +32,7 @@ if doTraining
     trainingTime = toc;
     save (model_name, 'detector','-v7.3');
 else
-    %·ñÔòµ÷ÓÃÒÑ¾­Ô¤ÑµÁ·¹ıµÄÄ£ĞÍ
+    %å¦åˆ™è°ƒç”¨å·²ç»é¢„è®­ç»ƒè¿‡çš„æ¨¡å‹
     pretrained = load('standard_cell2_detector_yolov2_0610_epoch50_2.mat');
     detector = pretrained.detector;
 end
