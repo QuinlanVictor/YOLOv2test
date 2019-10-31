@@ -99,17 +99,15 @@ for j = 1:numel(img_path_list)    %遍历文件 numel()函数返回数组个数
     imagenum = dicomInformation.InstanceNumber; 
 %                     ins_number(j)=instance;
     dcm_number(j) = imagenum;
-for s = 1 : sop_num(2)    %对比
+for s = 1 : sop_num(2)%对比
     if strcmpi(instance,sop_text(1,s))
         dcm_number(s) = imagenum;     %编号？？?*
     end
+  end
 end
 total = [num_mal,dcm_number,max_min_xy];
-if isempty(total)
-    continue;
-end
+% if isempty(total)
+%     continue;
+% end
 % child_path =
-xlswrite('2.xls',total);     %导入到xls文件中
-
-
-end
+xlswrite('case1.xls',total);     %导入到xls文件中
