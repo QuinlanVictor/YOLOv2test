@@ -1,14 +1,14 @@
 clear;clc;
-folder_name_all = uigetdir('');%Ñ¡ÔñÎÄ¼ş¼Ğ
-img_path_list = dir(strcat(folder_name_all,'\','*.dcm'));% »ñÈ¡¸ÃÎÄ¼ş¼ĞÖĞËùÓĞ¸ñÊ½µÄÍ¼Ïñ 
+cd
+folder_name_all= pwd
+%folder_name_all = uigetdir('');%é€‰æ‹©æ–‡ä»¶å¤¹
+img_path_list = dir(strcat(folder_name_all,'\','*.dcm'));% è·å–è¯¥æ–‡ä»¶å¤¹ä¸­æ‰€æœ‰æ ¼å¼çš„å›¾åƒ 
 for i=1:numel(img_path_list)
     oldname = img_path_list(i).name;
     dicomInformation = dicominfo(strcat(folder_name_all,'\',oldname));
     imagenum = dicomInformation.InstanceNumber;
     newname=num2str(imagenum,'%d.dcm');
-%     renstr=['!rename','"',oldname,'"',newname];
-%     eval(renstr);
-
-%     eval(['!rename',oldname,newname]);
-    movefile(oldname,newname);
+    %movefile(oldname,newname);
+    cmd=['rename ',oldname,' ', newname];
+    status = system(cmd);
 end
