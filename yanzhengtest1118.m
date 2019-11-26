@@ -1,12 +1,13 @@
-%%%éªŒè¯çš„æµ‹è¯•ç¨‹åº1118
+%%%ÑéÖ¤µÄ²âÊÔ³ÌĞò1118
 close all;clear;clc;
 gpuDevice(1);
 
-diary 'log1118.txt'
+diary 'log1121.txt'
+showtime;
 
-load detector_yolov2_test1113.mat
-test_image_folder = uigetdir('E:\Study\Research\Data\Result\LIDC\testdata');%æµ‹è¯•é›†ä½ç½®
-test_output_folder = 'E:\Study\Research\Data\Result\LIDC\testdata\output';%è¾“å‡ºå›¾ç‰‡ä½ç½®
+load detector_yolov2_test1120.mat
+test_image_folder = uigetdir('E:\Study\Research\Data\Result\LIDC\testdata\testimg');%²âÊÔ¼¯Î»ÖÃ
+test_output_folder = 'E:\Study\Research\Data\Result\LIDC\testdata\output\output141-1121';%Êä³öÍ¼Æ¬Î»ÖÃ
 test_files = dir(test_image_folder);
 
 if ~isfolder(test_output_folder)
@@ -21,10 +22,10 @@ for k = 3 : length(test_files)
     fullFileName = fullfile(test_image_folder, baseFileName);
     tic;
     I = imread(fullFileName);
-    [bboxes,scores,labels] = detect(detector,I,'Threshold',0.5); %original = 0.5åˆ†ç±»å‡†ç¡®åº¦é˜ˆå€¼
+    [bboxes,scores,labels] = detect(detector,I); %original = 0.5·ÖÀà×¼È·¶ÈãĞÖµ
     [bboxes,scores,labels] = selectStrongestBboxMulticlass(bboxes, scores, labels, ...
-                'RatioType','Union', ... %original = 'Union'è¾¹æ¡†é‡å åº¦åˆ†æ¯ï¼Œ'Union'ä»¥å°†æ¯”ç‡è®¡ç®—ä¸ºbboxAå’Œä¹‹é—´çš„ç›¸äº¤é¢ç§¯bboxBé™¤ä»¥ä¸¤è€…çš„å¹¶é›†é¢ç§¯
-                'OverlapThreshold',0.01); %original = 0.01é‡å ç‡é˜ˆå€¼ 0.5é»˜è®¤
+                'RatioType','Union', ... %original = 'Union'±ß¿òÖØµş¶È·ÖÄ¸£¬'Union'ÒÔ½«±ÈÂÊ¼ÆËãÎªbboxAºÍÖ®¼äµÄÏà½»Ãæ»ıbboxB³ıÒÔÁ½ÕßµÄ²¢¼¯Ãæ»ı
+                'OverlapThreshold',0.01); %original = 0.01ÖØµşÂÊãĞÖµ 0.5Ä¬ÈÏ
    
     if ~isempty(labels)
         I = insertObjectAnnotation(I,'rectangle',bboxes,scores,'LineWidth',3); %original=scores
@@ -35,5 +36,5 @@ for k = 3 : length(test_files)
     imwrite(I,[test_output_folder,'/',output_base_name,'_output','.jpg']);
     fprintf(1, 'Processing time = %.3f seconds; Writing file %s\n', toc, [test_output_folder,'/',output_base_name,'_output','.png']);
 end
-
+showtime;
 diary off
