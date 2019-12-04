@@ -1,0 +1,9 @@
+%%%12042019b的anchorboxes计算程序
+close all;clear;clc;
+imgdata = readtable('sorted1120.csv','Delimiter',',');
+for i=1:length(imgdata{:,1})
+    imgdata{i,2} = {str2double(reshape(strsplit(cell2mat(imgdata{i,2})),4,[])')};
+end
+blds = boxLabelDatastore(imgdata(:,2:end));
+numAnchors = 5;
+anchorBoxes = estimateAnchorBoxes(blds,numAnchors);
